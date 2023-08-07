@@ -1,7 +1,7 @@
 # 项目相关配置
-ruoyi:
+funShare:
   # 名称
-  name: RuoYi
+  name: FunShare
   # 版本
   version: 4.7.7
   # 版权年份
@@ -9,7 +9,7 @@ ruoyi:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  profile: D:/funshare/uploadPath
   # 获取ip地址开关
   addressEnabled: false
 
@@ -34,7 +34,7 @@ server:
 # 日志配置
 logging:
   level:
-    com.ruoyi: debug
+    com.funshare: debug
     org.springframework: warn
 
 # 用户配置
@@ -76,7 +76,7 @@ spring:
 # MyBatis
 mybatis:
     # 搜索指定包别名
-    typeAliasesPackage: com.ruoyi.**.domain
+    typeAliasesPackage: com.funshare.**.domain
     # 配置mapper的扫描，找到所有的mapper.xml映射文件
     mapperLocations: classpath*:mapper/**/*Mapper.xml
     # 加载全局的配置文件

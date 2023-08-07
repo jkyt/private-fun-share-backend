@@ -14,7 +14,7 @@ import com.funshare.common.enums.BusinessType;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 import com.funshare.common.core.controller.BaseController;
-import com.ruoyi.common.core.domain.AjaxResult;
+import com.funshare.common.core.domain.AjaxResult;
 import com.funshare.common.utils.poi.ExcelUtil;
 #if($table.crud || $table.sub)
 import com.funshare.common.core.page.TableDataInfo;
