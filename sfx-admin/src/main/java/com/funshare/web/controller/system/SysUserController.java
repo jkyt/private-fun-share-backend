@@ -19,6 +19,8 @@ import com.funshare.common.utils.StringUtils;
 import com.funshare.common.utils.poi.ExcelUtil;
 import com.funshare.framework.shiro.service.SysPasswordService;
 import com.funshare.framework.shiro.util.AuthorizationUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,7 @@ import java.util.stream.Collectors;
  * 
  * @author ruoyi
  */
+@Api("用户信息管理")
 @Controller
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController
@@ -67,6 +70,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:list")
     @PostMapping("/list")
     @ResponseBody
+    @ApiOperation("获取用户列表")
     public TableDataInfo list(SysUser user)
     {
         startPage();
@@ -78,6 +82,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:export")
     @PostMapping("/export")
     @ResponseBody
+    @ApiOperation("用户导出")
     public AjaxResult export(SysUser user)
     {
         List<SysUser> list = userService.selectUserList(user);
@@ -89,6 +94,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:import")
     @PostMapping("/importData")
     @ResponseBody
+    @ApiOperation("用户导入")
     public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception
     {
         ExcelUtil<SysUser> util = new ExcelUtil<SysUser>(SysUser.class);
@@ -110,6 +116,7 @@ public class SysUserController extends BaseController
      * 新增用户
      */
     @GetMapping("/add")
+    @ApiOperation("新增用户")
     public String add(ModelMap mmap)
     {
         mmap.put("roles", roleService.selectRoleAll().stream().filter(r -> !r.isAdmin()).collect(Collectors.toList()));
@@ -124,6 +131,7 @@ public class SysUserController extends BaseController
     @Log(title = "用户管理", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
+    @ApiOperation("新增保存用户")
     public AjaxResult addSave(@Validated SysUser user)
     {
         if (!userService.checkLoginNameUnique(user))
@@ -149,6 +157,7 @@ public class SysUserController extends BaseController
      */
     @RequiresPermissions("system:user:edit")
     @GetMapping("/edit/{userId}")
+    @ApiOperation("修改用户")
     public String edit(@PathVariable("userId") Long userId, ModelMap mmap)
     {
         userService.checkUserDataScope(userId);
@@ -166,6 +175,7 @@ public class SysUserController extends BaseController
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
+    @ApiOperation("修改保存用户")
     public AjaxResult editSave(@Validated SysUser user)
     {
         userService.checkUserAllowed(user);
@@ -189,6 +199,7 @@ public class SysUserController extends BaseController
 
     @RequiresPermissions("system:user:resetPwd")
     @GetMapping("/resetPwd/{userId}")
+    @ApiOperation("重置密码")
     public String resetPwd(@PathVariable("userId") Long userId, ModelMap mmap)
     {
         mmap.put("user", userService.selectUserById(userId));
@@ -199,6 +210,7 @@ public class SysUserController extends BaseController
     @Log(title = "重置密码", businessType = BusinessType.UPDATE)
     @PostMapping("/resetPwd")
     @ResponseBody
+    @ApiOperation("重置密码")
     public AjaxResult resetPwdSave(SysUser user)
     {
         userService.checkUserAllowed(user);
@@ -220,6 +232,7 @@ public class SysUserController extends BaseController
      * 进入授权角色页
      */
     @GetMapping("/authRole/{userId}")
+    @ApiOperation("进入授权角色页")
     public String authRole(@PathVariable("userId") Long userId, ModelMap mmap)
     {
         SysUser user = userService.selectUserById(userId);
@@ -237,6 +250,7 @@ public class SysUserController extends BaseController
     @Log(title = "用户管理", businessType = BusinessType.GRANT)
     @PostMapping("/authRole/insertAuthRole")
     @ResponseBody
+    @ApiOperation("用户授权角色")
     public AjaxResult insertAuthRole(Long userId, Long[] roleIds)
     {
         userService.checkUserDataScope(userId);
@@ -249,6 +263,7 @@ public class SysUserController extends BaseController
     @Log(title = "用户管理", businessType = BusinessType.DELETE)
     @PostMapping("/remove")
     @ResponseBody
+    @ApiOperation("删除用户")
     public AjaxResult remove(String ids)
     {
         if (ArrayUtils.contains(Convert.toLongArray(ids), getUserId()))
@@ -263,6 +278,7 @@ public class SysUserController extends BaseController
      */
     @PostMapping("/checkLoginNameUnique")
     @ResponseBody
+    @ApiOperation("校验用户名")
     public boolean checkLoginNameUnique(SysUser user)
     {
         return userService.checkLoginNameUnique(user);
@@ -273,6 +289,7 @@ public class SysUserController extends BaseController
      */
     @PostMapping("/checkPhoneUnique")
     @ResponseBody
+    @ApiOperation("校验手机号码")
     public boolean checkPhoneUnique(SysUser user)
     {
         return userService.checkPhoneUnique(user);
@@ -283,6 +300,7 @@ public class SysUserController extends BaseController
      */
     @PostMapping("/checkEmailUnique")
     @ResponseBody
+    @ApiOperation("校验email邮箱")
     public boolean checkEmailUnique(SysUser user)
     {
         return userService.checkEmailUnique(user);
@@ -295,6 +313,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:edit")
     @PostMapping("/changeStatus")
     @ResponseBody
+    @ApiOperation("用户状态修改")
     public AjaxResult changeStatus(SysUser user)
     {
         userService.checkUserAllowed(user);
@@ -308,6 +327,7 @@ public class SysUserController extends BaseController
     @RequiresPermissions("system:user:list")
     @GetMapping("/deptTreeData")
     @ResponseBody
+    @ApiOperation("加载部门列表树")
     public List<Ztree> deptTreeData()
     {
         List<Ztree> ztrees = deptService.selectDeptTree(new SysDept());
@@ -321,6 +341,7 @@ public class SysUserController extends BaseController
      */
     @RequiresPermissions("system:user:list")
     @GetMapping("/selectDeptTree/{deptId}")
+    @ApiOperation("选择部门树")
     public String selectDeptTree(@PathVariable("deptId") Long deptId, ModelMap mmap)
     {
         mmap.put("dept", deptService.selectDeptById(deptId));

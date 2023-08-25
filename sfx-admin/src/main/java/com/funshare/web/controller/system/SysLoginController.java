@@ -6,6 +6,8 @@ import com.funshare.common.core.text.Convert;
 import com.funshare.common.utils.ServletUtils;
 import com.funshare.common.utils.StringUtils;
 import com.funshare.framework.web.service.ConfigService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author ruoyi
  */
+@Api("登录管理")
 @Controller
 public class SysLoginController extends BaseController
 {
@@ -39,6 +42,7 @@ public class SysLoginController extends BaseController
     private ConfigService configService;
 
     @GetMapping("/login")
+    @ApiOperation("登录接口")
     public String login(HttpServletRequest request, HttpServletResponse response, ModelMap mmap)
     {
         // 如果是Ajax请求，返回Json字符串。
@@ -55,6 +59,7 @@ public class SysLoginController extends BaseController
 
     @PostMapping("/login")
     @ResponseBody
+    @ApiOperation("登录接口")
     public AjaxResult ajaxLogin(String username, String password, Boolean rememberMe)
     {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
@@ -76,6 +81,7 @@ public class SysLoginController extends BaseController
     }
 
     @GetMapping("/unauth")
+    @ApiOperation("权限校验失败")
     public String unauth()
     {
         return "error/unauth";
