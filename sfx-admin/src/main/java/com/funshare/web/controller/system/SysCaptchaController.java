@@ -8,6 +8,8 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +21,7 @@ import com.funshare.common.core.controller.BaseController;
 /**
  * 图片验证码（支持算术形式）
  * 
- * @author ruoyi
+ * @author yt
  */
 @Controller
 @RequestMapping("/captcha")
@@ -35,6 +37,7 @@ public class SysCaptchaController extends BaseController
      * 验证码生成
      */
     @GetMapping(value = "/captchaImage")
+    @ApiOperation("验证码生成")
     public ModelAndView getKaptchaImage(HttpServletRequest request, HttpServletResponse response)
     {
         ServletOutputStream out = null;
