@@ -193,6 +193,7 @@
         <module>sfx-quartz</module>
         <module>sfx-generator</module>
         <module>sfx-common</module>
+        <module>sfx-modules</module>
     </modules>
     <packaging>pom</packaging>
 
